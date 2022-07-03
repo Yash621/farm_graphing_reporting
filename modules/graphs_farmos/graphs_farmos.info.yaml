@@ -1,0 +1,7 @@
+name: Graphs Farmos
+description: renders graphs
+type: module
+package: farmOS graphing reporting graphs
+core_version_requirement: ^9
+dependencies:
+  - farm:farm_entity

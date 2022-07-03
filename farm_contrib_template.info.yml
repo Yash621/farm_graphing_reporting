@@ -1,0 +1,7 @@
+name: farmOS graphing reporting
+type: module
+description: farmOS graphing reporting
+package: farmOS Contrib
+core_version_requirement: ^9
+dependencies:
+  - farm_entity

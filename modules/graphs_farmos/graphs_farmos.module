@@ -1,0 +1,9 @@
+<?php
+
+function graphs_farmos_theme($existing, $type, $theme, $path) {
+  return [
+    'graphs_farmos' => [
+      'variables' => array('items' => [], 'title' => '')
+    ],
+  ];
+}

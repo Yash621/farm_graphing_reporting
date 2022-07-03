@@ -1,0 +1,7 @@
+crop-report:
+  version: 1.0
+  css:
+    component:
+      css/crop_report.css: {}
+  js:
+    js/crop_report.js: {}

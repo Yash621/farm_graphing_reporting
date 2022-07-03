@@ -1,0 +1,7 @@
+graphs-farmos:
+  version: 1.0
+  css:
+    component:
+      css/graphs_farmos.css: {}
+  js:
+    js/graphs_farmos.js: {}

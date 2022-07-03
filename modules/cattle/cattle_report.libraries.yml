@@ -1,0 +1,7 @@
+cattle-report:
+  version: 1.0
+  css:
+    component:
+      css/cattle_report.css: {}
+  js:
+    js/cattle_report.js: {}

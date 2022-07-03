@@ -1,0 +1,7 @@
+harvest-report:
+  version: 1.0
+  css:
+    component:
+      css/harvest_report.css: {}
+  js:
+    js/harvest_report.js: {}

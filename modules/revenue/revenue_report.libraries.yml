@@ -1,0 +1,7 @@
+revenue-report:
+  version: 1.0
+  css:
+    component:
+      css/revenue_report.css: {}
+  js:
+    js/revenue_report.js: {}

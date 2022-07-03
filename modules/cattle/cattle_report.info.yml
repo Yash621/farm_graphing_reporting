@@ -1,0 +1,7 @@
+name: Cattle Report
+description: renders cattle reports
+type: module
+package: farmOS graphing reporting cattle
+core_version_requirement: ^9
+dependencies:
+  - farm:farm_entity

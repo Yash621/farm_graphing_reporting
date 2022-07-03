@@ -1,0 +1,7 @@
+name: Crop Report
+description: renders crop reports
+type: module
+package: farmOS graphing reporting crop
+core_version_requirement: ^9
+dependencies:
+  - farm:farm_entity

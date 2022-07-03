@@ -1,0 +1,7 @@
+harvest.report:
+  path: '/harvest'
+  defaults:
+    _controller: '\Drupal\harvest_report\Controller\HarvestReportController::report'
+    _title: 'Harvest Reports'
+  requirements:
+    _permission: 'access content'

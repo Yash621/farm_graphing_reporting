@@ -1,0 +1,7 @@
+cattle.report:
+  path: '/cattle'
+  defaults:
+    _controller: '\Drupal\cattle_report\Controller\CattleReportController::report'
+    _title: 'Cattle Reports'
+  requirements:
+    _permission: 'access content'
