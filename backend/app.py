@@ -8,7 +8,7 @@ CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route("/")
 def home():
-  return "Server is running on port 500"
+  return "Server is running on port 5000"
 
 @app.route("/revenue", methods = ['GET'])
 def revenue():
