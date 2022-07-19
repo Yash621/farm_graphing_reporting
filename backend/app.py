@@ -2,6 +2,9 @@ from tokenize import String
 from flask import Flask
 import pandas as pd
 from flask_cors import CORS
+from farmOS import farmOS
+from farmOS.subrequests import Action, Subrequest, SubrequestsBlueprint, Format
+
 
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
@@ -20,7 +23,6 @@ def cattle():
   cattleData = pd.read_csv('data/Livestock_data.csv')
   cattleData.drop(['ref_state_id','ref_district_id','state_name','district_name','Total_poultry','cattle'], axis=1, inplace=True)
   animalTypes = cattleData.columns.values
-  demo ={}
   animalData = {}
   for animal in animalTypes:
     animalData[animal] = int(cattleData[animal].sum())

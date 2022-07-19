@@ -1,23 +1,70 @@
-console.log("yash");
-console.log("hello 3");
-console.log("hello 4");
-console.log("hello 4");
-console.log("hello 5");
-console.log("hello 6");
-console.log("hello 7");
-// const corsOptions = {
-//   origin: 'http://localhost:5000',
-//   credentials: true
-// }
+function csvJSON(csv){
+  var lines=csv.split("\n");
+  var result = {};
+  var headers=lines[0].split(",");
+  for (var i = 0; i < headers.length; i++){
+    if (isNaN(parseInt(headers[i]))) {
+      headers[i] = headers[i].replace(/[^a-zA-Z ]/g, "");
+    }
+    result[headers[i]] = [];
+      for (var j = 1; j < lines.length; j++){
+        var currentline = lines[j].split(",");
+        if (typeof currentline[i] === "string") {
+          if (isNaN(parseInt(currentline[i]))) { 
+            currentline[i] = currentline[i].replace(/[^a-zA-Z ]/g, '');
+          }
+        }
+        result[headers[i]].push(currentline[i]);
+      }
+  }
+  return JSON.stringify(result); //JSON
+}
 
 createLineChart();
 createPieChart();
 createScatterChart();
+console.log("graphs_farmos.js");
 
+function readFile(file) {
+  console.log(file);
+  const reader = new FileReader();
+  reader.onload = function (e) { 
+    // console.log(e.target.result);
+    const data=csvJSON(e.target.result);
+    console.log(data);
+    console.log("hello")
+  }
+  reader.readAsText(file);
+  console.log("hello")
+}
+
+const createGraph = () => {
+  // console.log(this.value);
+  console.log("create graph");
+  let selectedFile = document.getElementById("file").files[0];
+  document.getElementsByClassName("container")[0].innerHTML = "";
+  readFile(selectedFile);
+  const graph = `
+  <div class="change-files-container">
+  <input type="file" id="files"></input>
+ </div>
+  <div class="graph-container">
+  <canvas id="pieChart" class="graph"></canvas>
+  <div id="graph-type">Pie Chart</div>
+  </div>
+<div class="change-graph-container">
+  <select onchange="changeGraph()" id="graph-select">
+   <option value="pieChart">Select Graph</option>
+   <option value="pieChart">Pie Chart</option>
+   <option value="barChart">bar Chart</option>
+  </select>
+</div>`;
+  document.getElementsByClassName("container")[0].innerHTML = graph;
+}
 function createLineChart() {
   var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
   var yValues = [7,8,8,9,9,9,10,11,14,14,15];
-
+  
   new Chart("lineChart", {
     type: "line",
     data: {
