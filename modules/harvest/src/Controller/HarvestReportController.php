@@ -24,7 +24,7 @@ class HarvestReportController extends ControllerBase {
 
     $render['chart_1'] = [
       '#type' => 'graphs_farmos',
-      '#title' => 'lineChart',
+      '#title' => 'Harvest',
       '#attached' => [
         'library' => [
           'graphs_farmos/graphs-farmos',

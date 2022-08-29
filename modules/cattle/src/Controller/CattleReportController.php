@@ -24,7 +24,7 @@ class CattleReportController extends ControllerBase {
 
     $render['chart_1'] = [
       '#type' => 'graphs_farmos',
-      '#title' => 'lineChart',
+      '#title' => 'Cattle',
       '#attached' => [
         'library' => [
           'graphs_farmos/graphs-farmos',

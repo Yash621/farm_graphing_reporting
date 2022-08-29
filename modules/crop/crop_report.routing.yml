@@ -1,7 +1,0 @@
-crop.report:
-  path: '/crop'
-  defaults:
-    _controller: '\Drupal\crop_report\Controller\CropReportController::report'
-    _title: 'Crop Reports'
-  requirements:
-    _permission: 'access content'

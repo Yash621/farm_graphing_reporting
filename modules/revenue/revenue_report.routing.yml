@@ -2,6 +2,6 @@ revenue.report:
   path: '/revenue'
   defaults:
     _controller: '\Drupal\revenue_report\Controller\RevenueReportController::report'
-    _title: 'Revenue Reports'
+    _title: 'Build Revenue Reports'
   requirements:
     _permission: 'access content'

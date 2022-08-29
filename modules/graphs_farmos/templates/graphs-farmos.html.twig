@@ -1,19 +1,12 @@
-<div class="container">
+<div class="container {{ title }}">
   <div class="upload-files-container">
-   <input type="file" id="file" onchange="createGraph()"></input>
+   <div class="header-container">See {{ title }} Analytics</div>
+   <div class="body-container">
+    <div class="button-container">
+       <p style="position: absolute" onClick="createGraph()">View Analytics</p>
+    </div>
+   </div>
   </div>
-  {# <div class="graph-container">
-    <canvas id="pieChart" class="graph"></canvas>
-    <div id="graph-type">{{ title }}</div>
-  </div>
- 
-  <div class="change-graph-container">
-    <select onchange="changeGraph()" id="graph-select">
-     <option value="pieChart">Select Graph</option>
-     <option value="pieChart">Pie Chart</option>
-     <option value="barChart">bar Chart</option>
-    </select>
-  </div> #}
 </div>
 <script
 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
