@@ -147,20 +147,34 @@ function showTimeStamp() {
   console.log("hello");
 }
 
+function createErrorElement(errorMessage) {
+  const error = document.createElement("p");
+  error.id = "error";
+  error.setAttribute("style", "color: red; font-size: 12px");
+  error.innerHTML = errorMessage;
+  return error;
+}
+
 // filtering data based on timestamps, Note: to be implemented
 async function filterData() {
   if (document.getElementById("error")!=undefined) {
     document.getElementById("error").remove();
   }
-  let startDate = new Date(document.getElementsByTagName("input")[0].value);
+  const startValue = document.getElementsByTagName("input")[0].value;
+  const endValue = document.getElementsByTagName("input")[1].value;
+  let errorMessage = "";
+   if (startValue == "" || endValue == "") {
+     errorMessage = "Please select both start and end date";
+   }
+  let startDate = new Date(startValue);
   startDate = parseInt(startDate.getTime()) / 1000;
-  let endDate = new Date(document.getElementsByTagName("input")[1].value);
+  let endDate = new Date(endValue);
   endDate = parseInt(endDate.getTime()) / 1000;
   if (startDate > endDate) {
-    const error = document.createElement("p");
-    error.id = "error";
-    error.setAttribute("style", "color: red; font-size: 12px");
-    error.innerHTML = "Start date cannot be greater than end date";
+    errorMessage = "Start date cannot be greater than end date";
+  }
+  if (errorMessage != "") {
+    const error = createErrorElement(errorMessage);
     const timeStampContainer = document.getElementsByClassName(
       "time-stamp-sub-container"
     )[0];
@@ -170,6 +184,7 @@ async function filterData() {
     timeStampContainer.appendChild(error);
     return;
   }
+  console.log(startValue, endValue);
   console.log(startDate, endDate);
   let filteredData = {};
   enableDisableLoading("enable");
