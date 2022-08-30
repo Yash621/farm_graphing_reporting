@@ -32,6 +32,7 @@ function getRandomColor(barColors) {
 // creating initial graph
 const createGraph = async () => {
   console.log("execution starts");
+  enableDisableLoading("enable");
   const graph = `
   <div class="time-stamp-container">
   <div class="time-stamp-sub-container">
@@ -52,15 +53,25 @@ const createGraph = async () => {
   </select>
 </div>`;
   if (moduleType === "Cattle") {
-    let animalData = await fetch("http://localhost/api/asset/animal");
+    let animalData ={}
+    try {
+      animalData = await fetch("http://localhost/api/asset/animal");
+    }catch(error) {
+      console.error(error);
+    }
     animalData = await animalData.json();
     globalGraphData = processGraphData(animalData);
     console.log(globalGraphData);
   }
   if (moduleType === "Harvest") {
-    let plantData = await fetch(
+    let plantData = {}
+    try {
+      plantData = await fetch(
       "http://localhost/api/log/harvest?include=quantity"
     );
+    } catch (error) {
+      console.error(error);
+    }
     plantData = await plantData.json();
     const plantHarvest = processGraphData(plantData);
     globalGraphData = plantHarvest;
@@ -68,6 +79,7 @@ const createGraph = async () => {
   document.getElementsByClassName("container")[0].innerHTML = "";
   document.getElementsByClassName("container")[0].style.flexDirection = "row";
   document.getElementsByClassName("container")[0].innerHTML = graph;
+  document.getElementsByClassName("graph-container")[0].setAttribute("style", "width: 60%");
   fillGlobalAttributeColors(Object.keys(globalGraphData).length);
   createPieChart(globalGraphData);
 };
@@ -160,19 +172,26 @@ async function filterData() {
   }
   console.log(startDate, endDate);
   let filteredData = {};
-  // await fetch(
-  //   `http://localhost/api/log/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}&include=quantity`
-  // );
+  enableDisableLoading("enable");
   if (moduleType === "Harvest") {
-    filteredData = await fetch(
+    try {
+       filteredData = await fetch(
       `http://localhost/api/log/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}&include=quantity`
     );
+    } catch (error) {
+      console.error(e);
+    }
   }
   if (moduleType === "Cattle") {
-    filteredData = await fetch(
+    try {
+       filteredData = await fetch(
       `http://localhost/api/asset/animal?filter[start][condition][path]=created&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=created&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}`
     );
+    }catch (error) {
+      console.error(error);
+    }
   }
+  enableDisableLoading("disable");
   filteredData = await filteredData.json();
   console.log(filteredData);
   globalGraphData = processGraphData(filteredData);
@@ -245,6 +264,20 @@ function createBarChart(values) {
       },
     },
   });
+}
+
+// adding loading to the screen
+function enableDisableLoading(type) {
+  if (type === "enable") {
+      const graphContainer =
+      document.getElementsByClassName("graph-container")[0];
+      graphContainer.innerHTML = "";
+      const loading = document.createElement("h3");
+      loading.innerHTML = "Loading...";
+      graphContainer.appendChild(loading);
+  } else {
+    document.getElementsByClassName("graph-container")[0].innerHTML = "";
+  }
 }
 
 // changing graph type eg: going from pie chat to bar chart

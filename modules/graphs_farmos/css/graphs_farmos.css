@@ -13,9 +13,9 @@
   color: green;
 }
 .graph-container {
-  width: 60%;
+  width: 100%;
   /* background-color: green; */
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -38,7 +38,7 @@
   max-width:700px;
   /* background-color: yellow; */
 }
-.upload-files-container{
+.analytics-sub-container{
   /* background-color:green; */
   height: 100%;
   width: 100%;
