@@ -147,6 +147,7 @@ function showTimeStamp() {
   console.log("hello");
 }
 
+// creating error message element
 function createErrorElement(errorMessage) {
   const error = document.createElement("p");
   error.id = "error";
