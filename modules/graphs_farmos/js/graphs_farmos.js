@@ -156,15 +156,18 @@ async function filterData() {
     return;
   }
   console.log(startDate, endDate);
-  let filteredData = null;
+  let filteredData = {};
+  // await fetch(
+  //   `http://localhost/api/log/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}&include=quantity`
+  // );
   if (moduleType === "Harvest") {
     filteredData = await fetch(
-      `http://localhost/api/log/harvest/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<&filter[end][condition][value]=${endDate}&include=quantity`
+      `http://localhost/api/log/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}&include=quantity`
     );
   }
   if (moduleType === "Cattle") {
     filteredData = await fetch(
-      `http://localhost/api/asset/animal?filter[start][condition][path]=created&filter[start][condition][operator]=>&filter[start][condition][value]=${startDate}&filter[end][condition][path]=created&filter[end][condition][operator]=<&filter[end][condition][value]=${endDate}`
+      `http://localhost/api/asset/animal?filter[start][condition][path]=created&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=created&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}`
     );
   }
   filteredData = await filteredData.json();

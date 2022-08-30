@@ -1,7 +1,0 @@
-name: Revenue Report
-description: renders revenue reports
-type: module
-package: farmOS graphing reporting revenue
-core_version_requirement: ^9
-dependencies:
-  - farm:farm_entity

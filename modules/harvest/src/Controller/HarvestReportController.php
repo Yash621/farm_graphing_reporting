@@ -13,12 +13,6 @@ class HarvestReportController extends ControllerBase {
    *   A simple renderable array.
    */
   public function report() {
-    $items = array(
-      array('name' => 'Article one'),
-      array('name' => 'Article two'),
-      array('name' => 'Article three'),
-      array('name' => 'Article four'),
-    );
 
     $render = [];
 
@@ -33,16 +27,5 @@ class HarvestReportController extends ControllerBase {
     ];
 
     return $render;
-
-    // return array(
-    //   '#title' => 'Farm Report',
-    //   '#theme' => 'harvest_report',
-    //   '#items' => $items,
-    //   '#attached' => [
-    //     'library' => [
-    //       'harvest_report/harvest-report',
-    //     ],
-    //   ],
-    // );
   }
 }
