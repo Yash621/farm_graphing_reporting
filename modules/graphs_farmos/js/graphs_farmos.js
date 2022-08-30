@@ -137,13 +137,16 @@ function showTimeStamp() {
 
 // filtering data based on timestamps, Note: to be implemented
 async function filterData() {
-  console.log("hello");
+  if (document.getElementById("error")!=undefined) {
+    document.getElementById("error").remove();
+  }
   let startDate = new Date(document.getElementsByTagName("input")[0].value);
   startDate = parseInt(startDate.getTime()) / 1000;
   let endDate = new Date(document.getElementsByTagName("input")[1].value);
   endDate = parseInt(endDate.getTime()) / 1000;
   if (startDate > endDate) {
     const error = document.createElement("p");
+    error.id = "error";
     error.setAttribute("style", "color: red; font-size: 12px");
     error.innerHTML = "Start date cannot be greater than end date";
     const timeStampContainer = document.getElementsByClassName(
