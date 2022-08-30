@@ -142,6 +142,19 @@ async function filterData() {
   startDate = parseInt(startDate.getTime()) / 1000;
   let endDate = new Date(document.getElementsByTagName("input")[1].value);
   endDate = parseInt(endDate.getTime()) / 1000;
+  if (startDate > endDate) {
+    const error = document.createElement("p");
+    error.setAttribute("style", "color: red; font-size: 12px");
+    error.innerHTML = "Start date cannot be greater than end date";
+    const timeStampContainer = document.getElementsByClassName(
+      "time-stamp-sub-container"
+    )[0];
+    document
+      .getElementsByClassName("time-stamp-sub-container")[0]
+      .setAttribute("style", "justify-content: space-evenly;height: 50%");
+    timeStampContainer.appendChild(error);
+    return;
+  }
   console.log(startDate, endDate);
   let filteredData = null;
   if (moduleType === "Harvest") {
@@ -187,7 +200,7 @@ function createPieChart(values) {
     options: {
       title: {
         display: true,
-        text: "Farm crop analysis",
+        text: `${moduleType} analysis`,
       },
     },
   });
@@ -222,7 +235,7 @@ function createBarChart(values) {
       legend: { display: false },
       title: {
         display: true,
-        text: "Crop harvest data",
+        text: `${moduleType} analysis`,
       },
     },
   });
