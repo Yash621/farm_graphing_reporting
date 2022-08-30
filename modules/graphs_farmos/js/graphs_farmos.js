@@ -51,48 +51,67 @@ const createGraph = async () => {
    <option value="Bar Chart">Bar Chart</option>
   </select>
 </div>`;
-  // http://localhost/api/log/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=%3E&filter[start][condition][value]=1660584424&filter[end][condition][path]=timestamp&filter[end][condition][operator]=%3C&filter[end][condition][value]=1661621224
-  let plantData = await fetch(
-    "http://localhost/api/log/harvest?include=quantity"
-  );
-  plantData = await plantData.json();
-  console.log(plantData);
-  const plantHarvest = processGraphData(plantData);
+  if (moduleType === "Cattle") {
+    let animalData = await fetch("http://localhost/api/asset/animal");
+    animalData = await animalData.json();
+    globalGraphData = processGraphData(animalData);
+    console.log(globalGraphData);
+  }
+  if (moduleType === "Harvest") {
+    let plantData = await fetch(
+      "http://localhost/api/log/harvest?include=quantity"
+    );
+    plantData = await plantData.json();
+    const plantHarvest = processGraphData(plantData);
+    globalGraphData = plantHarvest;
+  }
   document.getElementsByClassName("container")[0].innerHTML = "";
   document.getElementsByClassName("container")[0].style.flexDirection = "row";
   document.getElementsByClassName("container")[0].innerHTML = graph;
-  globalGraphData = plantHarvest;
-  fillGlobalAttributeColors(Object.keys(plantHarvest).length);
-  createPieChart(plantHarvest);
+  fillGlobalAttributeColors(Object.keys(globalGraphData).length);
+  createPieChart(globalGraphData);
 };
 
 // processing data to be used in creating graph
-function processGraphData(plantData) {
-  const plantHarvest = {};
-  for (let i = 0; i < plantData.data.length; i++) {
-    if (
+function processGraphData(processingData) {
+  if (moduleType === "Harvest") {
+    const plantHarvest = {};
+    for (let i = 0; i < processingData.data.length; i++) {
+      if (
+        plantHarvest[
+          processingData.data[i].attributes.name.substring(
+            8,
+            processingData.data[i].attributes.name.length
+          )
+        ] == undefined
+      ) {
+        plantHarvest[
+          processingData.data[i].attributes.name.substring(
+            8,
+            processingData.data[i].attributes.name.length
+          )
+        ] = 0;
+      }
       plantHarvest[
-        plantData.data[i].attributes.name.substring(
+        processingData.data[i].attributes.name.substring(
           8,
-          plantData.data[i].attributes.name.length
+          processingData.data[i].attributes.name.length
         )
-      ] == undefined
-    ) {
-      plantHarvest[
-        plantData.data[i].attributes.name.substring(
-          8,
-          plantData.data[i].attributes.name.length
-        )
-      ] = 0;
+      ] += parseFloat(processingData.included[i].attributes.value.decimal);
     }
-    plantHarvest[
-      plantData.data[i].attributes.name.substring(
-        8,
-        plantData.data[i].attributes.name.length
-      )
-    ] += parseFloat(plantData.included[i].attributes.value.decimal);
+    return plantHarvest;
   }
-  return plantHarvest;
+  if (moduleType == "Cattle") {
+    const animalData = {};
+    for (let i = 0; i < processingData.data.length; i++) {
+      if (animalData[processingData.data[i].attributes.name] == undefined) {
+        animalData[processingData.data[i].attributes.name] = 1;
+      } else {
+        animalData[processingData.data[i].attributes.name] += 1;
+      }
+    }
+    return animalData;
+  }
 }
 
 // showing date timestamp component
@@ -124,9 +143,17 @@ async function filterData() {
   let endDate = new Date(document.getElementsByTagName("input")[1].value);
   endDate = parseInt(endDate.getTime()) / 1000;
   console.log(startDate, endDate);
-  let filteredData = await fetch(
-    `http://localhost/api/log/harvest/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<&filter[end][condition][value]=${endDate}&include=quantity`
-  );
+  let filteredData = null;
+  if (moduleType === "Harvest") {
+    filteredData = await fetch(
+      `http://localhost/api/log/harvest/harvest?filter[start][condition][path]=timestamp&filter[start][condition][operator]=>&filter[start][condition][value]=${startDate}&filter[end][condition][path]=timestamp&filter[end][condition][operator]=<&filter[end][condition][value]=${endDate}&include=quantity`
+    );
+  }
+  if (moduleType === "Cattle") {
+    filteredData = await fetch(
+      `http://localhost/api/asset/animal?filter[start][condition][path]=created&filter[start][condition][operator]=>&filter[start][condition][value]=${startDate}&filter[end][condition][path]=created&filter[end][condition][operator]=<&filter[end][condition][value]=${endDate}`
+    );
+  }
   filteredData = await filteredData.json();
   console.log(filteredData);
   globalGraphData = processGraphData(filteredData);
