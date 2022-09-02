@@ -5,7 +5,6 @@ const moduleType = document
   .innerHTML.split(" ")[1]; // type of module to be plotted eg: harvest, animal etc
 const globalAttributeColors = []; // global attribute colors
 
-console.log(moduleType);
 
 // generating colors for attributes to fill globalAttributeColors
 function fillGlobalAttributeColors(colorsRequired) {
@@ -22,9 +21,7 @@ function getRandomColor(barColors) {
   for (var i = 0; i < 6; i++) {
     color += letters[Math.round(Math.random() * 15)];
   }
-  console.log(barColors, color);
   if (barColors.indexOf(color) == -1) {
-    console.log(color);
     return color;
   }
   color = getRandomColor(barColors);
@@ -33,7 +30,6 @@ function getRandomColor(barColors) {
 
 // creating initial graph
 const createGraph = async () => {
-  console.log("execution starts");
   enableDisableLoading("enable");
   const graph = `
   <div class="time-stamp-container">
@@ -63,7 +59,6 @@ const createGraph = async () => {
     }
     animalData = await animalData.json();
     globalGraphData = processGraphData(animalData);
-    console.log(globalGraphData);
   }
   if (moduleType === "Harvest") {
     let plantData = {}
@@ -146,7 +141,6 @@ function showTimeStamp() {
   <button class="filter-button button-container"
   onClick="filterData()">Filter</button>
   `;
-  console.log("hello");
 }
 
 // creating error message element
@@ -187,8 +181,6 @@ async function filterData() {
     timeStampContainer.appendChild(error);
     return;
   }
-  console.log(startValue, endValue);
-  console.log(startDate, endDate);
   let filteredData = {};
   enableDisableLoading("enable");
   if (moduleType === "Harvest") {
@@ -211,7 +203,6 @@ async function filterData() {
   }
   enableDisableLoading("disable");
   filteredData = await filteredData.json();
-  console.log(filteredData);
   globalGraphData = processGraphData(filteredData);
   fillGlobalAttributeColors(Object.keys(globalGraphData).length);
   changeGraph();
@@ -261,8 +252,6 @@ function createBarChart(values) {
       barYValues.push(values[keys[key]]);
     }
   }
-  console.log(values);
-  console.log("hello");
   new Chart("Bar Chart", {
     type: "bar",
     data: {
@@ -302,7 +291,6 @@ function enableDisableLoading(type) {
 function changeGraph() {
   const graphContainer = document.getElementsByClassName("graph-container")[0];
   graphContainer.innerHTML = "";
-  console.log(globalGraphData);
   if (Object.keys(globalGraphData).length == 0) {
     const nullBanner = document.createElement("h4");
     nullBanner.innerHTML = "No data to display";
@@ -317,7 +305,6 @@ function changeGraph() {
   if (graphType === "Pie Chart") {
     createPieChart(globalGraphData);
   } else if (graphType === "Bar Chart") {
-    console.log("bar chart");
     createBarChart(globalGraphData);
   }
   const graphHeading = document.createElement("p");
