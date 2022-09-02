@@ -1,9 +1,9 @@
 <?php
 
-function cattle_report_theme($existing, $type, $theme, $path) {
+function animal_report_theme($existing, $type, $theme, $path) {
 
   return array(
-    'cattle_report' => array(
+    'animal_report' => array(
       'variables' => array('items' => [], 'title' => '')
     )
   );

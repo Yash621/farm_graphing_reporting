@@ -1,0 +1,7 @@
+name: Animal Report
+description: renders animal reports
+type: module
+package: farmOS graphing reporting animal
+core_version_requirement: ^9
+dependencies:
+  - farm:farm_entity

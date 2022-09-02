@@ -1,0 +1,7 @@
+animal-report:
+  version: 1.0
+  css:
+    component:
+      css/animal_report.css: {}
+  js:
+    js/animal_report.js: {}

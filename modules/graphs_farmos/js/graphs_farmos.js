@@ -5,6 +5,8 @@ const moduleType = document
   .innerHTML.split(" ")[1]; // type of module to be plotted eg: harvest, animal etc
 const globalAttributeColors = []; // global attribute colors
 
+console.log(moduleType);
+
 // generating colors for attributes to fill globalAttributeColors
 function fillGlobalAttributeColors(colorsRequired) {
   for (let color = 0; color < colorsRequired; color++) {
@@ -52,7 +54,7 @@ const createGraph = async () => {
    <option value="Bar Chart">Bar Chart</option>
   </select>
 </div>`;
-  if (moduleType === "Cattle") {
+  if (moduleType === "Animal") {
     let animalData ={}
     try {
       animalData = await fetch("http://localhost/api/asset/animal");
@@ -113,7 +115,7 @@ function processGraphData(processingData) {
     }
     return plantHarvest;
   }
-  if (moduleType == "Cattle") {
+  if (moduleType == "Animal") {
     const animalData = {};
     for (let i = 0; i < processingData.data.length; i++) {
       if (animalData[processingData.data[i].attributes.name] == undefined) {
@@ -198,7 +200,7 @@ async function filterData() {
       console.error(e);
     }
   }
-  if (moduleType === "Cattle") {
+  if (moduleType === "Animal") {
     try {
        filteredData = await fetch(
       `http://localhost/api/asset/animal?filter[start][condition][path]=created&filter[start][condition][operator]=>=&filter[start][condition][value]=${startDate}&filter[end][condition][path]=created&filter[end][condition][operator]=<=&filter[end][condition][value]=${endDate}`

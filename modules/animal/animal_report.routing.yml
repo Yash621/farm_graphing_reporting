@@ -1,0 +1,7 @@
+animal.report:
+  path: '/animal'
+  defaults:
+    _controller: '\Drupal\animal_report\Controller\AnimalReportController::report'
+    _title: 'Build Animal Reports'
+  requirements:
+    _permission: 'access content'

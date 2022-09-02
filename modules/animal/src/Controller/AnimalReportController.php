@@ -1,11 +1,11 @@
 <?php
-namespace Drupal\cattle_report\Controller;
+namespace Drupal\animal_report\Controller;
 use Drupal\Core\Controller\ControllerBase;
 
 /**
  * Provides route responses for the harvest module.
  */
-class CattleReportController extends ControllerBase {
+class AnimalReportController extends ControllerBase {
   /**
    * Returns a simple page.
    *
@@ -17,7 +17,7 @@ class CattleReportController extends ControllerBase {
 
     $render['chart_1'] = [
       '#type' => 'graphs_farmos',
-      '#title' => 'Cattle',
+      '#title' => 'Animal',
       '#attached' => [
         'library' => [
           'graphs_farmos/graphs-farmos',
